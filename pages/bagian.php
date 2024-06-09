@@ -1,4 +1,6 @@
-
+<?php
+include "database/connection.php";
+?>
             <div class="container-fluid px-4">
                 <div class="row">
                     <div class="col">
@@ -7,6 +9,26 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col">
+                        <?php
+                        $selectSQL = "SELECT * FROM bagian";
+                        $result = mysqli_query($connection, $selectSQL);
+                        if (!$result){
+                        ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php echo mysqli_error($connection) ?>
+                            </div>
+                        <?php
+                            return;
+                        }
+                        if (mysqli_num_rows($result) == 0) {
+                        ?>
+                            <div class="alert alert-light" role="alert">
+                                Data kosong
+                            </div>
+                        <?php
+                            return;
+                        }
+                        ?>
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
