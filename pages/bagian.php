@@ -6,6 +6,12 @@ include "database/connection.php";
                     <div class="col">
                         <h3>Bagian</h3>
                     </div>
+                    <div class="col">
+                        <a href="#" class="btn btn-success float-end">
+                            <i class="fa fa-plus-circle"></i>
+                            Tambah
+                        </a>
+                    </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col">
@@ -34,17 +40,35 @@ include "database/connection.php";
                                 <tr>
                                     <th scope="col" width="50">#</th>
                                     <th scope="col">Bagian</th>
+                                    <th scope="col" width="200">Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="align-middle">
-                                    <th scope="row">1</th>
-                                    <td>HRD</td>
-                                </tr>
-                                <tr class="align-middle">
-                                    <th scope="row">2</th>
-                                    <td>Finance</td>
-                                </tr>
+                                <?php
+                                $no = 1;
+                                while ($row = mysqli_fetch_assoc($result)){
+                                ?>
+                                    <tr class="align-middle">
+                                        <td>
+                                            <?php echo $no++ ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row["nama"] ?>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary">
+                                                <i class="fa fa-edit"></i>
+                                                Ubah
+                                            </a>
+                                            <a href="#" class="btn btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                                Hapus
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -53,10 +77,10 @@ include "database/connection.php";
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
+    
     </div>
 
-    <!-- JavaScript Bundle with Popper -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
