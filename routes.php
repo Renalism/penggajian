@@ -24,6 +24,12 @@ case "bagianhapus";
 case "bagianubah";
         include "pages/bagian/bagianubah.php";
         break;
+case "karyawan";
+        include "pages/karyawan/karyawan.php";
+        break;
+case "karyawantambah";
+        include "pages/karyawan/karyawantambah.php";
+        break;
 default:
         include "pages/404.php";
 

@@ -16,7 +16,7 @@
         <?php
         include "database/connection.php";
 
-        if (isset($_POST('simpan_button'))) {
+        if (isset($_POST['simpan_button'])) {
 
             $id = $_POST['id'];
             $nama = $_POST['nama'];
@@ -88,3 +88,9 @@
 </div>
 
 </div>
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
