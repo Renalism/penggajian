@@ -15,10 +15,15 @@
         include "database/connection.php";
 
         if(isset($_POST["simpan_button"])){
-            $nama = $_POST["nama"];
+            $nik = $_POST["nama"];
+            $nama = $_POST['nama'];
+            $tanggal_mulai = $_POST['tanggal_mulai'];
+            $gaji_pokok = $_POST['gaji_pokok'];
+            $status_karyawan = $_POST['status_karyawan'];
+            $bagian_id = $_POST['bagian_id'];
 
             $sudahAda = false;
-            $checkSQL = "SELECT * FROM bagian WHERE nama = '$nama'";
+            $checkSQL = "SELECT * FROM bagian WHERE nama = '$nik'";
             $resultCheck = mysqli_query($connection, $checkSQL);
             if (mysqli_num_rows($resultCheck) > 0) {
                 $sudahAda = true;
@@ -28,11 +33,17 @@
                 ?>
                 <div class="alert alert-danger" role="alert">
                     <i class="fa fa-exclamation-circle"></i>
-                    Nama bagian sama sudah ada
+                    Nomor Induk Karyawan (NIK) sama sudah ada
                 </div>
                 <?php
             } else {
-                $insertSQL = "INSERT INTO bagian SET nama='$nama'";
+                $insertSQL = "INSERT INTO karyawan SET
+                    nik='$nik',
+                    nama='$nama',
+                    tanggal_mulai='$tanggal_mulai',
+                    gaji_pokok='$gaji_pokok',
+                    status_karyawan='$status_karyawan',
+                    bagian_id=$bagian_id";
                 $result = mysqli_query($connection, $insertSQL);
                 if (!$result) {
                 ?>
@@ -74,7 +85,59 @@
                     <label for="gaji_pokok" class="form-label">Gaji Pokok</label>
                     <input type="number" class="form-control" id="gaji_pokok" name="gaji_pokok" required>
                 </div>
-                <div class="col- mb-3">
+                <label class="form-label">Status Karyawan</label>
+                <div class="mb-3 mt-3">
+                    <input class="form-check-input" type="radio" name="status_karyawan" id="TETAP" value="TETAP" required>
+                    <label class="form-check-label" for="TETAP">
+                        Tetap
+                    </label>
+                </div>
+                <div class="mb-3 mt-3">
+                    <input class="form-check-input" type="radio" name="status_karyawan" id="KONTRAK" value="KONTRAK" required>
+                    <label class="form-check-label" for="KONTRAK">
+                        Kontrak
+                    </label>
+                </div>
+                <div class="mb-3 mt-3">
+                    <input class="form-check-input" type="radio" name="status_karyawan" id="MAGANG" value="MAGANG" required>
+                    <label class="form-check-label" for="MAGANG">
+                        Magang
+                    </label>
+                </div>
+                <div lass="mb-3 mt-3">
+                    <label for="bagian_id" class="form-label">Bagian</label>
+                    <?php
+                    $selectSQL = "SELECT * FROM bagian";
+                    $result = mysqli_query($connection, $selectSQL);
+                    if (!$result) {
+                    ?>
+                        <div class="alert alert-danger" role="alerr">
+                            <?php echo mysqli_error($connection) ?>
+                        </div>
+                    <?php
+                        return;
+                    }
+                    if (mysqli_num_rows($result) == 0) {
+                    ?>
+                        <div class="alert alert-danger" role="alerr">
+                          Data kosong
+                        </div>
+                    <?php
+                        return;
+                    }
+                    ?>
+                    <select class="form-select" aria label="Default select example" name="bagian_id">
+                        <option value="" selected> -- Pilih Bagian -- </option>
+                        <?php
+                        while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
+                            <option value="<?php echo $row["id"]?>"><?php echo $row["nama"] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col mb-3">
                     <button class="btn btn-success" type="submit" name="simpan_button">
                         <i class="fas fa-save"></i>
                         Simpan
